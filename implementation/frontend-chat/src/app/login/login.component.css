@@ -1,0 +1,36 @@
+form input {
+    border: 1px solid rgba(200, 200, 255, 0.6);
+    background-color: rgba(200, 200, 255, 0.2);
+    width: 30rem;
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+    margin: 0 auto 0.5rem auto;
+    display: block;
+    text-align: center;
+    font-size: 1.3rem;
+    color: white;
+    transition-duration: 0.5s;
+    font-weight: 300;
+}
+form input:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+form input:focus {
+    background-color: rgba(235, 235, 235, 0.6);
+    width: 35rem;
+    color: aqua;
+}
+form button {
+    background-color: gray;
+    border: 0;
+    padding: 0.5rem 1rem;
+    color: white;
+    border-radius: 3px;
+    width: 30rem;
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition-duration: 0.5s;
+}
+form button:hover {
+  background-color: crimson;
+}

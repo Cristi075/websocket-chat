@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+.content {
+  padding: 5rem;
+  text-align: center;
+}
+
+html, body{
+  height: 100%;
+}
+body { 
+      background: #141E30;
+      background: linear-gradient(to bottom left, #141E30 0%, #243B55 100%);
+      background-position: center center;
+      background-repeat:  no-repeat;
+      background-attachment: fixed;
+      background-size:  cover;
+      left: 0;
+      width: 100%;
+}

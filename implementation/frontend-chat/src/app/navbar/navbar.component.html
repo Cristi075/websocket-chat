@@ -1,0 +1,41 @@
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+  <a class="navbar-brand" [routerLink]="['/']">WebChat</a>
+
+  <ul class="nav navbar-nav">
+    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="nav-link" [routerLink]="['/']">Home</a>
+    </li>
+
+    <li class="nav-item dropdown" [routerLinkActive]="['active']" >
+      <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Users</a>
+      <ul class="dropdown-menu" style="padding:1rem">
+        <li><a [routerLink]="['user/list']">List users</a></li>
+        <li><a [routerLink]="['user/add']">Add user</a></li>
+      </ul>
+    </li>
+
+    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="nav-link" [routerLink]="['user/active']">Active users</a>
+    </li>
+
+    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+      <a class="nav-link" [routerLink]="['chat']">Chat</a>
+    </li>
+
+  </ul>
+
+
+  <ul class="nav navbar-nav pull-right">
+
+    <li class="nav-item" *ngIf="this.authService.isAuthenticated()">
+      <p class="nav text-muted navbar-text">Logged in as {{this.authService.getName()}}</p>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['login']" *ngIf="!this.authService.isAuthenticated()">Login</a>
+
+      <a class="nav-link" style="cursor: pointer" (click)="this.authService.logout()" *ngIf="this.authService.isAuthenticated()">Logout</a>
+    </li>
+  </ul>
+
+</nav>

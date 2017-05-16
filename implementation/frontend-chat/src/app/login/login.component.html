@@ -1,0 +1,13 @@
+<div class="container">
+  <form class="form" (ngSubmit)="onSubmit()">
+    <input type="text" class="input-lg" placeholder="Username" [(ngModel)]="username" name="username">
+    <input type="password" class="input-lg" placeholder="Password" [(ngModel)]="password" name="password">
+    <button type="submit">Log in</button>
+  </form>
+
+  <br>
+
+  <div *ngIf="this.message" class="container bg-inverse" style="opacity:0.8">
+    <h2 style="color:crimson"> <i class="fa fa-times-circle"></i> Login failed. {{this.message}} </h2>
+  </div>
+</div>

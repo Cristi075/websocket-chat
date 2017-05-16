@@ -1,0 +1,22 @@
+<div class="container"  style="opacity:0.97;">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-inverse">
+            <thead>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Roles</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of this.users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.fullName}}</td>
+                    <td>
+                        <p *ngFor="let role of user.roles"> {{role.name}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

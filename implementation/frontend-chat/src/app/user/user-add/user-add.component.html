@@ -1,0 +1,16 @@
+<div class="container bg-inverse text-white" style="opacity:0.97;">
+  <br>
+  <app-user-form [model]="this.user" (errorEmitter)="this.processEvent($event)">
+  </app-user-form>
+
+  <button type="submit" class="btn btn-primary" [disabled]="this.error" (click)="onSubmit()">Submit</button>
+
+  <div *ngIf="created==true">
+    <i class="fa fa-check fa-3x" style="color:green"></i> {{this.message}}
+  </div>
+  <div *ngIf="created==false">
+    <i class="fa fa-times fa-3x" style="color:red"></i> {{this.message}}
+  </div>
+  <br>
+  <br>
+</div>

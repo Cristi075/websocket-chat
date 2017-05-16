@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content bg-inverse text-white">
+    <div class="modal-header">
+      <h4 class="modal-title">{{title}}</h4>
+    </div>
+
+    <div class="modal-body">
+      <h5>
+        <i class="fa fa-check" style="color:green" *ngIf="this.success"></i>
+        <i class="fa fa-times" style="color:red"   *ngIf="!this.success"></i>
+        {{message}}
+        <br>
+        {{message2}}
+      </h5>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-block btn-lg" (click)="this.close()">OK</button>
+    </div>
+  </div>
+</div>

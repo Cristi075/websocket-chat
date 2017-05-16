@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  contextPath: /chat
+---
+spring:
+  profiles: default, production
+  datasource:
+    initialize: false
+datasource:
+  properties:
+    url: jdbc:mysql://localhost:3306/project
+    username: assignment
+    password: softwaredesign
+    driverClassName: com.mysql.jdbc.Driver
+    defaultSchema:
+    maxPoolSize: 10
+    hibernate:
+      hbm2ddl.method: none
+      show_sql: false
+      format_sql: false
+      dialect: org.hibernate.dialect.MySQLDialect
+---
+spring:
+  profiles: test
+  datasource:
+    initialize: false
+datasource:
+  properties:
+    url: jdbc:h2:~/test
+    username: "SA"
+    password:
+    driverClassName: org.h2.Driver
+    defaultSchema:
+    maxPoolSize: 10
+    hibernate:
+      hbm2ddl.method: create-drop
+      show_sql: false
+      format_sql: true
+      dialect: org.hibernate.dialect.H2Dialect
