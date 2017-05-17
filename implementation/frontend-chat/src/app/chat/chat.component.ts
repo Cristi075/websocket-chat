@@ -4,13 +4,20 @@ import { User } from '../model/user';
 import { Conversation } from '../model/conversation';
 import { Message } from '../model/message';
 
-import { StompService } from '../service/stomp.service';
 import { AuthService } from '../service/auth.service';
+import { ActiveUsersService } from '../service/active-users.service';
+import { ConversationService } from '../service/conversation.service';
+import { MessageService } from '../service/message.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  providers: [
+    ActiveUsersService,
+    ConversationService,
+    MessageService
+  ]
 })
 export class ChatComponent implements OnInit {
 
@@ -20,59 +27,56 @@ export class ChatComponent implements OnInit {
   private newMessage: string;
 
   constructor(
-    private stompService: StompService,
-    private authService: AuthService
+    private authService: AuthService,
+    private activeUsersService: ActiveUsersService,
+    private conversationService: ConversationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
-    this.stompService.subscribe("/topic/active", (msg) => this.parseUsersData(msg));
-    this.stompService.subscribe("/user/topic/conversation/1", (msg) => this.parseConversationData(msg));
-    this.stompService.subscribe("/user/topic/messages/convId=1", (msg) => this.parseMessagesData(msg));
+    this.activeUsersService.subscribe();
+    this.activeUsersService.getObservable()
+      .subscribe(users => this.users = users);
+
+    this.conversationService.subscribe(1);
+    this.conversationService.getObservable()
+      .subscribe(conversation => this.conversation = conversation);
+
+    this.messageService.subscribe(1);
+    this.messageService.getObservable()
+      .subscribe(messages => this.messages = messages);
   }
 
   ngOnDestroy() {
-    this.stompService.unsubscribe("/topic/active");
-    this.stompService.unsubscribe("/user/topic/conversation/1");
-    this.stompService.unsubscribe("/user/topic/messages/convId=1");
+    this.activeUsersService.unsubscribe();
+    this.conversationService.unsubscribe();
+    this.messageService.unsubscribe();
   }
 
-  private parseUsersData(msg): void{
-    let userList = JSON.parse(msg.body);
-    this.users = userList.sort((u1: User, u2: User) => u1.id - u2.id);
-  }
-
-  private parseConversationData(msg): void{
-    this.conversation = JSON.parse(msg.body);
-  }
-
-  private parseMessagesData(msg): void{
-    this.messages = JSON.parse(msg.body);
-  }
-
-  private addUser(user: User){
+  private addUser(user: User) {
     this.conversation.members.push(user);
-    this.stompService.publish("/conversation/"+this.conversation.id, JSON.stringify(this.conversation));
+    this.conversationService.updateConversation(this.conversation);
   }
 
-  private removeUser(user: User){
+  private removeUser(user: User) {
     let usernames: string[] = this.conversation.members.map(u => u.username);
     let index = usernames.indexOf(user.username);
-    this.conversation.members.splice(index,1);
-    this.stompService.publish("/conversation/"+this.conversation.id, JSON.stringify(this.conversation));
+    this.conversation.members.splice(index, 1);
+    this.conversationService.updateConversation(this.conversation);
   }
 
-  private send(): void{
+  private send(): void {
     let msg = new Message();
     msg.id = null;
     msg.author = null;
     msg.sentAt = null;
     msg.content = this.newMessage;
-
-    this.stompService.publish("/message/convId="+this.conversation.id, JSON.stringify(msg));
+    
+    this.messageService.sendMessage(this.conversation.id, msg)
     this.newMessage = "";
   }
 
-  private canBeAdded(username: string): boolean{
+  private canBeAdded(username: string): boolean {
     let usernames: string[] = this.conversation.members.map(u => u.username);
     return !usernames.includes(username);
   }

@@ -6,12 +6,12 @@
 }
 
 .conversation-info {
-    height:10%;
+    height:15%;
     width:100%;
 }
 
 .conversation-members {
-    height: 85%;
+    height: 80%;
     width: 100%;
     overflow-y: scroll;
 }

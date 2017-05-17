@@ -6,6 +6,7 @@ import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { Angular2AutoScroll } from "angular2-auto-scroll/lib/angular2-auto-scroll.directive";
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
@@ -38,7 +39,8 @@ import { ChatComponent } from './chat/chat.component';
     UserDetailComponent,
     UserFormComponent,
     ActiveUserListComponent,
-    ChatComponent
+    ChatComponent,
+    Angular2AutoScroll
   ],
   imports: [
     BrowserModule,
