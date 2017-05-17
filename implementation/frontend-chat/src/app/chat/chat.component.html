@@ -1,253 +1,130 @@
-<body style="font-family:Verdana">
-  <div class="container">
-    <div class="row " style="padding-top:40px;">
-      <h3 class="text-center">BOOTSTRAP CHAT EXAMPLE </h3>
-      <br /><br />
-      <div class="col-md-8">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            RECENT CHAT HISTORY
-          </div>
-          <div class="panel-body">
-            <ul class="media-list">
+<div class="fluid-container bg-inverse text-white" *ngIf="this.conversation && !this.canBeAdded(this.authService.getName())">
+  <div class="row" style="height:80vh">
 
-              <li class="media">
 
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle " src="/img/user.png" />
-                                                </a>
-                    <div class="media-body">
-                      Donec sit amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit
-                      amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.
-                      <br />
-                      <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
-                      <hr />
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle " src="assets/img/user.gif" />
-                                                </a>
-                    <div class="media-body">
-                      Donec sit amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit
-                      amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.
-                      <br />
-                      <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
-                      <hr />
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle " src="assets/img/user.png" />
-                                                </a>
-                    <div class="media-body">
-                      Donec sit amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit
-                      amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.
-                      <br />
-                      <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
-                      <hr />
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle " src="assets/img/user.gif" />
-                                                </a>
-                    <div class="media-body">
-                      Donec sit amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit
-                      amet ligula enim. Duis vel condimentum massa. Donec sit amet ligula enim. Duis vel condimentum massa.
-                      <br />
-                      <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
-                      <hr />
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="panel-footer">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter Message" />
-              <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">SEND</button>
-                                    </span>
-            </div>
-          </div>
-        </div>
+    <div class="col-sm-2 conversation-control bg-inverse">
+      <div class="conversation-info">
+        <br>
+        <h3> Conv Nr. {{this.conversation.id}} </h3>
+        <h4>{{this.conversation.name}}</h4>
       </div>
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            ONLINE USERS
-          </div>
-          <div class="panel-body">
-            <ul class="media-list">
+      <hr style="width: 100%; color: white; height: 0.3px; background-color:white;" />
+      <div class="conversation-members">
+        <div class="container" style="opacity:0.8;">
+          <div class="table-responsive">
+            <table class="table table-hover table-inverse">
 
-              <li class="media">
+              <thead>
+                <th>Members</th>
+              </thead>
 
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Alex Deo | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
+              <tbody>
+                <tr *ngFor="let user of this.conversation.members">
+                  <td>
+                    <div class="pull-left">
+                      {{user.username}}
                     </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Jhon Rexa | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
+                    <br>
+                    <div class="pull-left">
+                      {{user.fullName}}
                     </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Alex Deo | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
+                    <div class="pull-right" *ngIf="user.username != this.authService.getName()">
+                      <i class="fa fa-times fa-2x" style="color:crimson; cursor: pointer" (click)="removeUser(user)"></i>
                     </div>
-                  </div>
+                  </td>
+                </tr>
+              </tbody>
 
-                </div>
-              </li>
-              <li class="media">
+            </table>
 
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Jhon Rexa | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Alex Deo | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Jhon Rexa | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Alex Deo | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-              <li class="media">
-
-                <div class="media-body">
-
-                  <div class="media">
-                    <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.gif" />
-                                                </a>
-                    <div class="media-body">
-                      <h5>Jhon Rexa | User </h5>
-
-                      <small class="text-muted">Active From 3 hours</small>
-                    </div>
-                  </div>
-
-                </div>
-              </li>
-            </ul>
           </div>
         </div>
-
       </div>
     </div>
+
+    <div class="col-sm-7 msg-container">
+      <div class="msg-list">
+        <div class="fluid-container" style="opacity:0.8;">
+          <div class="table-responsive">
+            <table class="table table-hover table-inverse">
+
+              <thead>
+                <th>
+                </th>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let msg of this.messages">
+                  <td [ngClass]="{'msg-item': msg.author.username == this.authService.getName(), 
+                             'msg-item-self': msg.author.username != this.authService.getName() }">
+                    <p class="pull-right">{{msg.author.username}} at {{msg.sentAt | date:"medium"}}</p>
+                    <br>
+                    <p></p>
+                    <p [ngClass]="{'pull-right': msg.author.username == this.authService.getName(), 
+                                    'pull-left': msg.author.username != this.authService.getName() }">{{msg.content}}</p>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+      <hr style="width: 100%; color: white; height: 0.3px; background-color:white;" />
+
+      <div class="msg-input">
+        <form (ngSubmit)="send()">
+          <div class="input-group">
+            <input class="form-control" type="text" placeholder="Message" name="newMessage" [(ngModel)]="this.newMessage">
+            <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit" style="opacity:0.6">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-sm-3 active-users bg-inverse">
+
+      <div class="container" style="opacity:0.8;">
+        <div class="table-responsive">
+          <table class="table table-hover table-inverse">
+
+            <thead>
+              <th>Active users</th>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let user of this.users">
+                <td>
+                  <div class="pull-left">
+                    {{user.username}}
+                  </div>
+                  <br>
+                  <div class="pull-left">
+                    {{user.fullName}}
+                  </div>
+                  <div class="pull-right" *ngIf="this.canBeAdded(user.username)">
+                    <i class="fa fa-plus fa-2x" style="color:teal; cursor: pointer" (click)="addUser(user)"></i>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+
+    </div>
   </div>
-</body>
+</div>
+
+<div *ngIf="this.conversation && this.canBeAdded(this.authService.getName())">
+  <i class="fa fa-times-circle-o fa-4x" style="color:crimson"></i>
+  <h1 style="color:crimson">Access Denied</h1>
+</div>

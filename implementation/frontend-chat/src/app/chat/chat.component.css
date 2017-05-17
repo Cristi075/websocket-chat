@@ -1,0 +1,80 @@
+.conversation-control {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.conversation-info {
+    height:10%;
+    width:100%;
+}
+
+.conversation-members {
+    height: 85%;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.active-users {
+    height: 100%;
+    overflow-y: scroll;
+    padding: 0;
+    margin: 0;
+}
+
+.msg-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.msg-list {
+    width: 100%;
+    height:90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.msg-input {
+    height: 5%;
+    width:100%;
+}
+
+.msg-item {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(140,200,200,0.7);
+}
+
+.msg-item-self {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(140,200,255,0.5);
+}
+
+.form-control {
+  background-color: #676767;
+  opacity: 1;
+  color: white;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+
+}
+::-webkit-scrollbar-thumb {
+    background:#ddd; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #ddd; 
+}

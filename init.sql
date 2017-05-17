@@ -54,8 +54,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `project`.`Message` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(200) NULL,
-  `type` VARCHAR(45) NULL,
-  `sentAt` DATE NULL,
+  `sentAt` DATETIME NULL,
   `authorId` INT NOT NULL,
   `conversationId` INT NOT NULL,
   PRIMARY KEY (`id`, `authorId`, `conversationId`),

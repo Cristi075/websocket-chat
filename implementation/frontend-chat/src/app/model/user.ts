@@ -3,7 +3,7 @@ import { Role } from './role';
 export class User {
     id: number;
     username: string;
-    nickname: string;
+    fullName: string;
     roles: Role[];
 
     constructor(values: Object = {}) {

@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@stomp/ng2-stompjs": "^0.3.5",
+    "angular2-auto-scroll": "^1.0.12",
     "angular2-jwt": "^0.2.3",
     "bootstrap": "^4.0.0-alpha.5",
     "core-js": "^2.4.1",

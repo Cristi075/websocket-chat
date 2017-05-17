@@ -98,7 +98,6 @@ public class User {
 
         if (id != user.id) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (fullName != null ? !fullName.equals(user.fullName) : user.fullName != null) return false;
         return roles != null ? roles.equals(user.roles) : user.roles == null;
     }
@@ -107,7 +106,6 @@ public class User {
     public int hashCode() {
         int result = id;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
