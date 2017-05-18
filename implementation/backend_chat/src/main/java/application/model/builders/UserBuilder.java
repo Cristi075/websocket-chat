@@ -3,13 +3,14 @@ package application.model.builders;
 import application.model.Role;
 import application.model.User;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserBuilder {
     private String username;
     private String password;
     private String fullName;
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<Role>();
 
     public UserBuilder setUsername(String username) {
         this.username = username;
@@ -26,8 +27,8 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public UserBuilder addRole(Role role) {
+        this.roles.add(role);
         return this;
     }
 

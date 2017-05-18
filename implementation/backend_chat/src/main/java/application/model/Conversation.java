@@ -1,7 +1,6 @@
 package application.model;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,6 +21,14 @@ public class Conversation {
             inverseJoinColumns = { @JoinColumn(name = "userId")}
     )
     private Set<User> members;
+
+    public Conversation(String name, Set<User> members) {
+        this.name = name;
+        this.members = members;
+    }
+
+    public Conversation() {
+    }
 
     public int getId() {
         return id;
@@ -45,5 +52,25 @@ public class Conversation {
 
     public void setMembers(Set<User> members) {
         this.members = members;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Conversation that = (Conversation) o;
+
+        if (id != that.id) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return members != null ? members.equals(that.members) : that.members == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (members != null ? members.hashCode() : 0);
+        return result;
     }
 }

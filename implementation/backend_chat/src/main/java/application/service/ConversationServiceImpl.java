@@ -41,4 +41,9 @@ public class ConversationServiceImpl implements ConversationService{
         Conversation updated = this.conversationRepository.save(conversation);
         return updated;
     }
+
+    @Override
+    public void deleteConversation(int id) {
+        this.conversationRepository.delete(id);
+    }
 }
