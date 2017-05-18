@@ -53,11 +53,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `project`.`Message` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `content` VARCHAR(200) NULL,
-  `sentAt` DATETIME NULL,
   `authorId` INT NOT NULL,
   `conversationId` INT NOT NULL,
-  PRIMARY KEY (`id`, `authorId`, `conversationId`),
+  `sentAt` DATETIME NOT NULL,
+  `content` VARCHAR(200) NULL,
+  `level` VARCHAR(45) NULL,
+  `image` LONGBLOB NULL,
+  `file` LONGBLOB NULL,
+  `fileName` VARCHAR(45) NULL,
+  `type` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
   INDEX `fk_Message_User1_idx` (`authorId` ASC),
   INDEX `fk_Message_Conversation1_idx` (`conversationId` ASC),
   CONSTRAINT `fk_Message_User1`
@@ -120,7 +125,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 
 INSERT INTO `project`.`user` (`username`, `password`, `fullName`) VALUES ('admin', 'admin', 'Administrator');
