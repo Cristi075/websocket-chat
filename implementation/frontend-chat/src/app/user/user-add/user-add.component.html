@@ -1,4 +1,4 @@
-<div class="container bg-inverse text-white" style="opacity:0.97;">
+<div class="container bg-inverse text-white" style="opacity:0.97;" *ngIf="this.authService.isAdmin()">
   <br>
   <app-user-form [model]="this.user" (errorEmitter)="this.processEvent($event)">
   </app-user-form>

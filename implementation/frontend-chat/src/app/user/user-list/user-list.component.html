@@ -1,4 +1,4 @@
-<div class="container"  style="opacity:0.97;">
+<div class="container"  style="opacity:0.97;" *ngIf="this.authService.isAdmin()">
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-inverse">
             <thead>

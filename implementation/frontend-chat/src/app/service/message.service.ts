@@ -37,11 +37,22 @@ export class MessageService {
   }
 
   private parseMessagesData(msg): void {
-    this.observable.next(JSON.parse(msg.body));
+    let messageList = JSON.parse(msg.body);
+
+    this.observable.next(messageList);
   }
 
   public sendMessage(conversationId: number, message: Message) {
     this.stompService.publish("/message/convId=" + conversationId, JSON.stringify(message));
   }
 
+  // Image data should be a base64 string
+  public sendImageMessage(conversationId: number, imageData: string) {
+    this.stompService.publish("/image-message/convId=" + conversationId, imageData);
+  }
+
+  // File data should be a base64 string
+  public sendFileMessage(conversationId: number, fileData: string, fileName: string) {
+    this.stompService.publish("/file-message/convId=" + conversationId + "&name="+fileName, fileData);
+  }
 }

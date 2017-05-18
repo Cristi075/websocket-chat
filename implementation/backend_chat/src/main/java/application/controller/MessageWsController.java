@@ -3,6 +3,8 @@ package application.controller;
 import application.model.Conversation;
 import application.model.Message;
 import application.model.User;
+import application.model.builders.FileMessageBuilder;
+import application.model.builders.ImageMessageBuilder;
 import application.service.ConversationService;
 import application.service.MessageService;
 import application.service.UserService;
@@ -15,6 +17,9 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -52,5 +57,50 @@ public class MessageWsController {
         message.setSentAt(new Date(System.currentTimeMillis()));
 
         this.messageService.save(message);
+    }
+
+    @MessageMapping("/image-message/convId={id}")
+    public void newImageMessage(@DestinationVariable("id") int conversationId,@Payload String encodedImage, Principal principal){
+        byte[] bytes = encodedImage.getBytes();
+
+        try {
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+
+            ImageMessageBuilder builder = new ImageMessageBuilder();
+
+            Message message = builder.setAuthor( userService.findByUsername(principal.getName()))
+                    .setConversation(this.conversationService.getById(conversationId))
+                    .setImage(blob)
+                    .createImageMessage();
+
+            this.messageService.save(message);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @MessageMapping("/file-message/convId={id}&name={name}")
+    public void newFileMessage(@DestinationVariable("id") int conversationId,@DestinationVariable("name") String fileName,@Payload String encodedFile, Principal principal){
+        byte[] bytes = encodedFile.getBytes();
+
+        try {
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
+
+            FileMessageBuilder builder = new FileMessageBuilder();
+
+            Message message = builder.setAuthor( userService.findByUsername(principal.getName()))
+                    .setConversation(this.conversationService.getById(conversationId))
+                    .setFile(blob)
+                    .setFileName(fileName)
+                    .createFileMessage();
+
+            this.messageService.save(message);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -6,6 +6,11 @@ export class Message {
     sentAt: Date;
     author: User;
 
+    image: any;
+
+    file: any;
+    fileName: string;
+
     constructor(values: Object = {}) {
         Object.assign(this, values);
     }

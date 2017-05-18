@@ -5,6 +5,7 @@ import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
 import { InfoComponent } from '../../dialogs/info/info.component';
 
 import { UserService } from '../../service/user.service';
+import { AuthService } from '../../service/auth.service';
 import { User } from '../../model/user';
 
 @Component({
@@ -20,7 +21,8 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {

@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 import java.security.Principal;
 import java.util.List;
@@ -51,6 +52,13 @@ public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfig
     public AuthInterceptor authInterceptor() throws Exception {
         AuthInterceptor authInterceptor = new AuthInterceptor();
         return authInterceptor;
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registration) {
+        registration.setMessageSizeLimit(2 * 1024 * 1024);
+        registration.setSendBufferSizeLimit(2 * 1024 * 1024);
+        registration.setSendTimeLimit(20000);
     }
 
 }

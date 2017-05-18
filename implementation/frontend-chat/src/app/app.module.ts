@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,7 +50,8 @@ import { ConversationListComponent } from './conversation-list/conversation-list
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    BootstrapModalModule
+    BootstrapModalModule,
+    FileUploadModule
   ],
   providers: [
     AuthService,

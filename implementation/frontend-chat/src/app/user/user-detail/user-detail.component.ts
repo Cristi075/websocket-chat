@@ -7,6 +7,7 @@ import { InputComponent } from '../../dialogs/input/input.component';
 
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserService } from '../../service/user.service';
+import { AuthService } from '../../service/auth.service';
 import { User } from '../../model/user';
 
 @Component({
@@ -29,7 +30,8 @@ export class UserDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {

@@ -7,6 +7,9 @@ import java.util.Date;
 
 @Entity
 @Table(name="Message")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue(value="message")
 public class Message {
 
     @Id
@@ -27,6 +30,16 @@ public class Message {
     @ManyToOne
     @JoinColumn(name="conversationId")
     private Conversation conversation;
+
+    public Message(String content, Date sentAt, User author, Conversation conversation) {
+        this.content = content;
+        this.sentAt = sentAt;
+        this.author = author;
+        this.conversation = conversation;
+    }
+
+    public Message() {
+    }
 
     public int getId() {
         return id;

@@ -114,7 +114,7 @@ export class StompService {
   }
 
   private debug = (args: any): void => {
-    console.log(new Date(), args);
+    //console.log(new Date(), args);
   }
 
 }

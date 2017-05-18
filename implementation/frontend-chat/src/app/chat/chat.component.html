@@ -1,26 +1,129 @@
-<div class="fluid-container bg-inverse text-white" *ngIf="this.conversation && !this.canBeAdded(this.authService.getName())">
-  <div class="row" style="height:80vh">
+<div *ngIf="this.authService.isAuthenticated()">
+  <div class="fluid-container bg-inverse text-white" *ngIf="this.conversation && !this.canBeAdded(this.authService.getName())">
+    <div class="row" style="height:85vh">
 
 
-    <div class="col-sm-2 conversation-control bg-inverse">
-      <div class="conversation-info">
-        <br>
-        <h3> Conv Nr. {{this.conversation.id}} </h3>
-        <h4>{{this.conversation.name}}</h4>
-        <button class="btn btn-primary btn-block" style="opacity: 0.7" (click)="rename()">Rename</button>
+      <div class="col-sm-2 conversation-control bg-inverse">
+        <div class="conversation-info">
+          <br>
+          <h3> Conv Nr. {{this.conversation.id}} </h3>
+          <h4>{{this.conversation.name}}</h4>
+          <button class="btn btn-primary btn-block" style="opacity: 0.7" (click)="rename()">Rename</button>
+        </div>
+        <hr style="width: 100%; color: white; height: 0.3px; background-color:white;" />
+        <div class="conversation-members">
+          <div class="container" style="opacity:0.8;">
+            <div class="table-responsive">
+              <table class="table table-hover table-inverse">
+
+                <thead>
+                  <th>Members</th>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let user of this.conversation.members">
+                    <td>
+                      <div class="pull-left">
+                        {{user.username}}
+                      </div>
+                      <br>
+                      <div class="pull-left">
+                        {{user.fullName}}
+                      </div>
+                      <div class="pull-right" *ngIf="user.username != this.authService.getName()">
+                        <i class="fa fa-times fa-2x" style="color:crimson; cursor: pointer" (click)="removeUser(user)"></i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+          </div>
+        </div>
       </div>
-      <hr style="width: 100%; color: white; height: 0.3px; background-color:white;" />
-      <div class="conversation-members">
+
+      <div class="col-sm-7 msg-container">
+        <div angular2-auto-scroll lock-y-offset="1" observe-attributes class="msg-list">
+          <div class="fluid-container" style="opacity:0.8;">
+            <div class="table-responsive">
+              <table class="table table-hover table-inverse">
+
+                <thead>
+                  <th>
+                  </th>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let msg of this.messages">
+                    <td [ngClass]="{'msg-item'  : msg.author.username == this.authService.getName(), 
+                             'msg-item-self'  : msg.author.username != this.authService.getName(),
+                             'msg-item-system': msg.level}">
+                      <p class="pull-left" *ngIf="msg.level" style="opacity:0.5"> System message </p>
+                      <p class="pull-right">{{msg.author.username}} at {{msg.sentAt | date:"medium"}}</p>
+                      <br>
+                      <p></p>
+                      <p [ngClass]="{'pull-right': msg.author.username == this.authService.getName(), 
+                                    'pull-left': msg.author.username != this.authService.getName() }"> &emsp; {{msg.content}} &emsp; </p>
+
+                      <div *ngIf="msg.image">
+                        <img [src]="sanitize(msg.image)" style="max-height: 20rem">
+                      </div>
+
+                      <div *ngIf="msg.fileName">
+                        {{msg.author.username}} sent a file : {{msg.fileName}}
+                        <i class="fa fa-download" style="opacity:0.7; cursor: pointer; color:crimson" (click)="this.download(msg)"></i>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+        <hr style="width: 100%; color: white; height: 0.3px; background-color:white;" />
+
+        <div class="msg-input">
+          <form (ngSubmit)="send()">
+            <div class="input-group">
+              <input class="form-control" type="text" placeholder="Message" name="newMessage" [(ngModel)]="this.newMessage">
+              <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit" style="opacity:0.6" [disabled]="this.newMessage==null">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </span>
+            </div>
+          </form>
+        </div>
+
+        <div class="msg-aux">
+          <input type="file" ng2FileSelect [uploader]="this.uploader" />
+          <button class="btn btn-secondary" type="button" style="opacity:0.6; color:crimson" (click)="this.sendImage()" [disabled]="this.fileData==null">
+          <i class="fa fa-file-image-o"></i>
+        </button>
+          <button class="btn btn-secondary" type="button" style="opacity:0.6; color:crimson" (click)="this.sendFile()" [disabled]="this.fileData==null">
+          <i class="fa fa-paperclip"></i>
+        </button>
+        </div>
+
+      </div>
+
+      <div class="col-sm-3 active-users bg-inverse">
+
         <div class="container" style="opacity:0.8;">
           <div class="table-responsive">
             <table class="table table-hover table-inverse">
 
               <thead>
-                <th>Members</th>
+                <th>Active users</th>
               </thead>
 
               <tbody>
-                <tr *ngFor="let user of this.conversation.members">
+                <tr *ngFor="let user of this.users">
                   <td>
                     <div class="pull-left">
                       {{user.username}}
@@ -29,8 +132,8 @@
                     <div class="pull-left">
                       {{user.fullName}}
                     </div>
-                    <div class="pull-right" *ngIf="user.username != this.authService.getName()">
-                      <i class="fa fa-times fa-2x" style="color:crimson; cursor: pointer" (click)="removeUser(user)"></i>
+                    <div class="pull-right" *ngIf="this.canBeAdded(user.username)">
+                      <i class="fa fa-plus fa-2x" style="color:teal; cursor: pointer" (click)="addUser(user)"></i>
                     </div>
                   </td>
                 </tr>
@@ -40,92 +143,13 @@
 
           </div>
         </div>
+
       </div>
-    </div>
-
-    <div class="col-sm-7 msg-container">
-      <div angular2-auto-scroll lock-y-offset="1" observe-attributes class="msg-list">
-        <div class="fluid-container" style="opacity:0.8;">
-          <div class="table-responsive">
-            <table class="table table-hover table-inverse">
-
-              <thead>
-                <th>
-                </th>
-              </thead>
-
-              <tbody>
-                <tr *ngFor="let msg of this.messages">
-                  <td [ngClass]="{'msg-item': msg.author.username == this.authService.getName(), 
-                             'msg-item-self': msg.author.username != this.authService.getName() }">
-                    <p class="pull-right">{{msg.author.username}} at {{msg.sentAt | date:"medium"}}</p>
-                    <br>
-                    <p></p>
-                    <p [ngClass]="{'pull-right': msg.author.username == this.authService.getName(), 
-                                    'pull-left': msg.author.username != this.authService.getName() }">{{msg.content}}</p>
-                  </td>
-                </tr>
-              </tbody>
-
-            </table>
-
-          </div>
-        </div>
-      </div>
-
-      <hr style="width: 100%; color: white; height: 0.3px; background-color:white;" />
-
-      <div class="msg-input">
-        <form (ngSubmit)="send()">
-          <div class="input-group">
-            <input class="form-control" type="text" placeholder="Message" name="newMessage" [(ngModel)]="this.newMessage">
-            <span class="input-group-btn">
-            <button class="btn btn-secondary" type="submit" style="opacity:0.6" [disabled]="this.newMessage==null">
-              <i class="fa fa-paper-plane"></i>
-            </button>
-          </span>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-sm-3 active-users bg-inverse">
-
-      <div class="container" style="opacity:0.8;">
-        <div class="table-responsive">
-          <table class="table table-hover table-inverse">
-
-            <thead>
-              <th>Active users</th>
-            </thead>
-
-            <tbody>
-              <tr *ngFor="let user of this.users">
-                <td>
-                  <div class="pull-left">
-                    {{user.username}}
-                  </div>
-                  <br>
-                  <div class="pull-left">
-                    {{user.fullName}}
-                  </div>
-                  <div class="pull-right" *ngIf="this.canBeAdded(user.username)">
-                    <i class="fa fa-plus fa-2x" style="color:teal; cursor: pointer" (click)="addUser(user)"></i>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-
-          </table>
-
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
 
-<div *ngIf="this.conversation && this.canBeAdded(this.authService.getName())">
-  <i class="fa fa-times-circle-o fa-4x" style="color:crimson"></i>
-  <h1 style="color:crimson">Access Denied</h1>
+  <div *ngIf="this.conversation && this.canBeAdded(this.authService.getName())">
+    <i class="fa fa-times-circle-o fa-4x" style="color:crimson"></i>
+    <h1 style="color:crimson">Access Denied</h1>
+  </div>
 </div>

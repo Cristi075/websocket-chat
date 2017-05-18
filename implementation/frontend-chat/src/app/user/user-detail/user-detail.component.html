@@ -1,21 +1,23 @@
-<div class="container bg-inverse text-white" style="opacity:0.97;" *ngIf="this.user">
-  <br>
-  <app-user-form [model]="this.user" [editable]="this.editMode" (errorEmitter)="this.processEvent($event)">
-  </app-user-form>
-
-
-  <div class="pull-left">
-    <button type="button" class="btn btn-danger" (click)="changePassword()"> Change password</button>
-  </div>
-
-  <div class="pull-right">
-    <span *ngIf="this.updated==true"><i class="fa fa-check fa-2x" style="color:green"></i> {{this.message}}</span>
-    <span *ngIf="this.updated==false"><i class="fa fa-times fa-2x" style="color:red"></i> {{this.message}}</span>
-    <button type="button" class="btn btn-primary" (click)="this.toggleMode()" *ngIf="!this.editMode">Edit</button>
-
-    <button type="submit" class="btn btn-success" (click)="onSubmit()" *ngIf="this.editMode" [disabled]="this.error">Submit</button>
-    <button type="button" class="btn btn-primary" (click)="this.toggleMode()" *ngIf="this.editMode">Cancel</button>
+<div *ngIf="this.authService.isAdmin()">
+  <div class="container bg-inverse text-white" style="opacity:0.97;" *ngIf="this.user">
     <br>
-    <br>
+    <app-user-form [model]="this.user" [editable]="this.editMode" (errorEmitter)="this.processEvent($event)">
+    </app-user-form>
+
+
+    <div class="pull-left">
+      <button type="button" class="btn btn-danger" (click)="changePassword()"> Change password</button>
+    </div>
+
+    <div class="pull-right">
+      <span *ngIf="this.updated==true"><i class="fa fa-check fa-2x" style="color:green"></i> {{this.message}}</span>
+      <span *ngIf="this.updated==false"><i class="fa fa-times fa-2x" style="color:red"></i> {{this.message}}</span>
+      <button type="button" class="btn btn-primary" (click)="this.toggleMode()" *ngIf="!this.editMode">Edit</button>
+
+      <button type="submit" class="btn btn-success" (click)="onSubmit()" *ngIf="this.editMode" [disabled]="this.error">Submit</button>
+      <button type="button" class="btn btn-primary" (click)="this.toggleMode()" *ngIf="this.editMode">Cancel</button>
+      <br>
+      <br>
+    </div>
   </div>
 </div>

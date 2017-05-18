@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ActiveUsersService } from '../../service/active-users.service';
+import { AuthService } from '../../service/auth.service';
 import { User } from '../../model/user';
 
 @Component({
@@ -16,7 +17,8 @@ export class ActiveUserListComponent implements OnInit, OnDestroy {
   private users: User[];
 
   constructor(
-    private activeUserService: ActiveUsersService
+    private activeUserService: ActiveUsersService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {

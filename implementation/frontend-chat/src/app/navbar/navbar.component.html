@@ -6,7 +6,7 @@
       <a class="nav-link" [routerLink]="['/']">Home</a>
     </li>
 
-    <li class="nav-item dropdown" [routerLinkActive]="['active']" >
+    <li class="nav-item dropdown" [routerLinkActive]="['active']" *ngIf="this.authService.isAdmin()">
       <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Users</a>
       <ul class="dropdown-menu" style="padding:1rem">
         <li><a [routerLink]="['user/list']">List users</a></li>
@@ -14,11 +14,11 @@
       </ul>
     </li>
 
-    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  *ngIf="this.authService.isAuthenticated()">
       <a class="nav-link" [routerLink]="['user/active']">Active users</a>
     </li>
 
-    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+    <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  *ngIf="this.authService.isAuthenticated()">
       <a class="nav-link" [routerLink]="['conversations']">Conversations</a>
     </li>
 

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { UserFormComponent } from '../user-form/user-form.component';
 import { UserService } from '../../service/user.service';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-user-add',
@@ -20,6 +21,7 @@ export class UserAddComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {

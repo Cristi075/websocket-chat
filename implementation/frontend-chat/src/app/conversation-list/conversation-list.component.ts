@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Conversation } from '../model/conversation';
 
 import { StompService } from '../service/stomp.service';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-conversation-list',
@@ -15,7 +16,8 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   private conversations: Conversation[];
 
   constructor(
-    private stompService: StompService
+    private stompService: StompService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -30,4 +32,10 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     this.conversations = JSON.parse(msg.body);
   }
 
+  private newConversation(): void{
+    let conversation = new Conversation;
+    conversation.name = this.authService.getName() + "'s conversation";
+
+    this.stompService.publish("/conversation/new", JSON.stringify(conversation));
+  }
 }

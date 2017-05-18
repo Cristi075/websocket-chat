@@ -1,4 +1,8 @@
-<div class="container"  style="opacity:0.97;">
+<div class="container" *ngIf="this.authService.isAuthenticated()">
+    <button class="btn btn-block btn-primary" style="opacity: 0.7" (click)="this.newConversation()">Create new conversation</button>
+</div>
+<br>
+<div class="container" *ngIf="this.authService.isAuthenticated()">
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-inverse">
             <thead>
@@ -13,7 +17,7 @@
                     <td>{{conversation.name}}</td>
                     <td>{{conversation.members.length}}</td>
                     <td>
-                      <i class="fa fa-arrow-right" style="cursor:pointer" [routerLink]="['../chat',conversation.id]"></i>
+                        <i class="fa fa-arrow-right" style="cursor:pointer" [routerLink]="['../chat',conversation.id]"></i>
                     </td>
                 </tr>
             </tbody>
