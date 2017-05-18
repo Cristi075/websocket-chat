@@ -52,11 +52,5 @@ public class MessageWsController {
         message.setSentAt(new Date(System.currentTimeMillis()));
 
         this.messageService.save(message);
-
-        List<Message> messages = this.messageService.findByConversation(conversation);
-
-        for(User member: conversation.getMembers()){
-            this.template.convertAndSendToUser(member.getUsername(),"/topic/messages/convId="+conversation.getId(),messages);
-        }
     }
 }

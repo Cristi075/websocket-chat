@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { DialogService } from "ng2-bootstrap-modal";
+import { InfoComponent } from '../dialogs/info/info.component';
+import { InputComponent } from '../dialogs/input/input.component';
 
 import { User } from '../model/user';
 import { Conversation } from '../model/conversation';
@@ -19,32 +24,38 @@ import { MessageService } from '../service/message.service';
     MessageService
   ]
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
 
   private users: User[];
   private conversation: Conversation;
   private messages: Message[];
-  private newMessage: string;
+  private newMessage: string = null;
 
   constructor(
+    private route: ActivatedRoute,
     private authService: AuthService,
+    private dialogService: DialogService,
     private activeUsersService: ActiveUsersService,
     private conversationService: ConversationService,
     private messageService: MessageService
   ) { }
 
   ngOnInit() {
-    this.activeUsersService.subscribe();
-    this.activeUsersService.getObservable()
-      .subscribe(users => this.users = users);
+    this.route.params.subscribe(params => {
+      let id = params['id'];
 
-    this.conversationService.subscribe(1);
-    this.conversationService.getObservable()
-      .subscribe(conversation => this.conversation = conversation);
+      this.activeUsersService.subscribe();
+      this.activeUsersService.getObservable()
+        .subscribe(users => this.users = users);
 
-    this.messageService.subscribe(1);
-    this.messageService.getObservable()
-      .subscribe(messages => this.messages = messages);
+      this.conversationService.subscribe(id);
+      this.conversationService.getObservable()
+        .subscribe(conversation => this.conversation = conversation);
+
+      this.messageService.subscribe(id);
+      this.messageService.getObservable()
+        .subscribe(messages => this.messages = messages);
+    });
   }
 
   ngOnDestroy() {
@@ -71,13 +82,42 @@ export class ChatComponent implements OnInit {
     msg.author = null;
     msg.sentAt = null;
     msg.content = this.newMessage;
-    
+
     this.messageService.sendMessage(this.conversation.id, msg)
-    this.newMessage = "";
+    this.newMessage = null;
   }
 
   private canBeAdded(username: string): boolean {
     let usernames: string[] = this.conversation.members.map(u => u.username);
     return !usernames.includes(username);
+  }
+
+  private rename(): void{
+    this.dialogService.addDialog(
+      InputComponent,
+      {
+        title: "Enter the new name",
+        placeholder: "New name",
+        type: "text"
+      }
+    ).subscribe(userInput => {
+      if (userInput == null) {
+        this.showMessage("Canceled", "Operation canceled by user", false);
+      } else {
+        this.conversation.name = userInput;
+        this.conversationService.updateConversation(this.conversation);
+      }
+    });
+  }
+
+  showMessage(title: string, message: string, success: boolean): void {
+    this.dialogService.addDialog(
+      InfoComponent,
+      {
+        title: title,
+        message: message,
+        success: success
+      }
+    );
   }
 }

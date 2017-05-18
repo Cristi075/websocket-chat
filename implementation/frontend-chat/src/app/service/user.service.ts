@@ -13,7 +13,7 @@ import { User } from '../model/user';
 
 @Injectable()
 export class UserService {
-  private userUrl: string = 'http://localhost:8080/chat/api/user/';
+  private userUrl: string = '/user/';
 
   constructor(
     private httpService: HttpService

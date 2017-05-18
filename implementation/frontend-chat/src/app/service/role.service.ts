@@ -13,7 +13,7 @@ import { Role } from '../model/role';
 
 @Injectable()
 export class RoleService {
-  private rolesUrl: string = 'http://localhost:8080/chat/api/role/';
+  private rolesUrl: string = '/role/';
   private headers: Headers;
 
   constructor(

@@ -25,6 +25,7 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserFormComponent } from './user/user-form/user-form.component';
 import { ActiveUserListComponent } from './user/active-user-list/active-user-list.component';
 import { ChatComponent } from './chat/chat.component';
+import { ConversationListComponent } from './conversation-list/conversation-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ChatComponent } from './chat/chat.component';
     UserFormComponent,
     ActiveUserListComponent,
     ChatComponent,
-    Angular2AutoScroll
+    Angular2AutoScroll,
+    ConversationListComponent
   ],
   imports: [
     BrowserModule,

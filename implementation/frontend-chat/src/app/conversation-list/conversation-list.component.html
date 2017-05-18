@@ -1,0 +1,22 @@
+<div class="container"  style="opacity:0.97;">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-inverse">
+            <thead>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Nr. of Members</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let conversation of this.conversations">
+                    <td>{{conversation.id}}</td>
+                    <td>{{conversation.name}}</td>
+                    <td>{{conversation.members.length}}</td>
+                    <td>
+                      <i class="fa fa-arrow-right" style="cursor:pointer" [routerLink]="['../chat',conversation.id]"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

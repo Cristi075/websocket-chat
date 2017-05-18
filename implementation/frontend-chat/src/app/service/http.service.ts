@@ -12,6 +12,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class HttpService {
   private headers: Headers;
+  private baseUrl: string = "http://localhost:8080/chat/api";
 
   constructor(
     private http: Http,
@@ -23,12 +24,12 @@ export class HttpService {
 
   get(url: string) {
     this.addAuthenticationHeader();
-    return this.http.get(url, { headers: this.headers }).catch(this.handleError);
+    return this.http.get(this.baseUrl + url, { headers: this.headers }).catch(this.handleError);
   }
 
   getBlob(url: string) {
     this.addAuthenticationHeader();
-    return this.http.get(url, {
+    return this.http.get(this.baseUrl + url, {
       headers: this.headers,
       responseType: ResponseContentType.Blob
     }).catch(this.handleError);
@@ -36,17 +37,17 @@ export class HttpService {
 
   post(url: string, body: Object) {
     this.addAuthenticationHeader();
-    return this.http.post(url, body, { headers: this.headers }).catch(this.handleError);
+    return this.http.post(this.baseUrl + url, body, { headers: this.headers }).catch(this.handleError);
   }
 
   put(url: string, body: Object) {
     this.addAuthenticationHeader();
-    return this.http.put(url, body, { headers: this.headers }).catch(this.handleError);
+    return this.http.put(this.baseUrl + url, body, { headers: this.headers }).catch(this.handleError);
   }
 
   delete(url: string) {
     this.addAuthenticationHeader();
-    return this.http.delete(url, { headers: this.headers }).catch(this.handleError);
+    return this.http.delete(this.baseUrl + url, { headers: this.headers }).catch(this.handleError);
   }
 
   

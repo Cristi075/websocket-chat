@@ -1,11 +1,8 @@
 package application.controller;
 
-import application.model.Conversation;
 import application.model.User;
 import application.service.ActiveUserService;
-import application.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.annotation.SendToUser;

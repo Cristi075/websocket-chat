@@ -11,6 +11,8 @@ import { ActiveUserListComponent } from './user/active-user-list/active-user-lis
 
 import { ChatComponent } from './chat/chat.component';
 
+import { ConversationListComponent } from './conversation-list/conversation-list.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -21,8 +23,12 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'chat',
+    path: 'chat/:id',
     component: ChatComponent
+  },
+  {
+    path: 'conversations',
+    component: ConversationListComponent
   },
   {
     path: 'user',
