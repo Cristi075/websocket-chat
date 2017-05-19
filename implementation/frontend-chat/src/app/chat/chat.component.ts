@@ -47,7 +47,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     "image/gif"
   ];
 
-  private maxSize: number = 1024 * 1024;
+  private maxSize: number = 2 * 1024 * 1024;
 
   constructor(
     private route: ActivatedRoute,

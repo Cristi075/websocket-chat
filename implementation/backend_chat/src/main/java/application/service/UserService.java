@@ -1,5 +1,6 @@
 package application.service;
 
+import application.exceptions.DuplicateException;
 import application.model.User;
 
 import java.util.List;
@@ -12,9 +13,9 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-    User saveUser(User user);
+    User saveUser(User user)  throws DuplicateException;
 
-    User updateUser(User user);
+    User updateUser(User user)  throws DuplicateException;
 
     void deleteUserById(int id);
 

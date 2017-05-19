@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.exceptions.DuplicateException;
 import application.model.User;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,11 @@ public class UserRestApiController {
     public ResponseEntity<?> createUser(@RequestBody User user) {
         User newUser;
 
-        newUser = this.userService.saveUser(user);
+        try {
+            newUser = this.userService.saveUser(user);
+        } catch (DuplicateException e) {
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
 
 
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
@@ -55,7 +60,16 @@ public class UserRestApiController {
     public ResponseEntity<?> updateUser(@PathVariable("id") int id, @RequestBody User user) {
         User currentUser = this.userService.findById(id);
 
-        currentUser = this.userService.updateUser(user);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (currentUser.getUsername().equals(username)){
+            return new ResponseEntity<>("You cannot edit yourself",HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            currentUser = this.userService.updateUser(user);
+        } catch (DuplicateException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
@@ -66,6 +80,11 @@ public class UserRestApiController {
 
         if (user == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (user.getUsername().equals(username)){
+            return new ResponseEntity<>("You cannot delete yourself",HttpStatus.BAD_REQUEST);
         }
 
         this.userService.deleteUserById(id);
